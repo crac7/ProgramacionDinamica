@@ -1,12 +1,20 @@
 import random
 import math
+from bokeh.plotting import figure, show
+
 def crearPuntos(nPuntos):
     puntosXY = []
-
+    xList = []
+    yList = []
     for i in range(nPuntos):
-        puntosXY.append(generatePuntosXY())
+        xyList = generatePuntosXY()
+        puntosXY.append(xyList)
+        x, y = xyList
+        xList.append(x)
+        yList.append(y)
+
     
-    return puntosXY
+    return (puntosXY, xList, yList)
 
 def comparaPuntosCercanos(coleccionPuntos):
     agrupamiento = []
@@ -46,9 +54,23 @@ def generatePuntosXY():
 
         return puntosXY
 
+
+def graficar(x, y):
+    grafica = figure(title='Camino aletorio', 
+                     x_axis_label='x', 
+                     y_axis_label='y')
+
+    grafica.circle(x,y, size=10,color="red")
+    show(grafica)
+
 if __name__ == '__main__':
         nPuntos = int(input('Cuantos puntos deseas generar :'))
-        collection = crearPuntos(nPuntos)
-        print(f'puntos ==> {collection}')
+        collection, xList, yList = crearPuntos(nPuntos)
+        print(collection)
         print(comparaPuntosCercanos(collection))
+        # print(xList, yList)
+        graficar(xList, yList)
+
+       
+
 
